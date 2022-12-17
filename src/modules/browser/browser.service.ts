@@ -32,8 +32,13 @@ export class BrowserService implements OnApplicationShutdown, OnApplicationBoots
         await page.close()
         return html
     }
-    async screenshot(url: string) {
+    async screenshot(url: string, width: number, height: number) {
         const page = await this.createPage();
+        await page.setViewport({
+            width: width,
+            height: height,
+            deviceScaleFactor: 1,
+        });
         await page.goto(url, {
             waitUntil: 'networkidle2',
         });

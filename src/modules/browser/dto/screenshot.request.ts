@@ -1,6 +1,8 @@
 import { IsNotEmpty } from "class-validator";
 
-export class ScreenshotRequest{
+export class ScreenshotRequest {
     @IsNotEmpty({ message: 'URL parameters cannot be empty' })
-    url: string   
+    url: string
+    width?: number
+    height?: number
 }
