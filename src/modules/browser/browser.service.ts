@@ -40,5 +40,6 @@ export class BrowserService implements OnApplicationShutdown, OnApplicationBoots
         var fileName = uuid() + ".png";
         await page.screenshot({ path: `./public/${fileName}` });
         await page.close()
+        return fileName;
     }
 }

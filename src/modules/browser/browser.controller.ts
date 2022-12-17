@@ -15,7 +15,7 @@ export class BrowserController {
     }
     @Post('screenshot')
     async screenshot(@Body() request: ScreenshotRequest) {
-        await this.browserService.screenshot(request.url)
-        return 'ok'
+        let fileName = await this.browserService.screenshot(request.url)
+        return fileName
     }
 }
