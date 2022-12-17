@@ -14,6 +14,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+  
+  // app.useStaticAssets(join(__dirname, '..', 'public'));
   const port = config().port;
   console.log(`listening on port ${port}...`);
   await app.listen(port);

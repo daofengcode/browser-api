@@ -17,16 +17,25 @@ export class BrowserService implements OnApplicationShutdown, OnApplicationBoots
             console.log("close browser.")
         });
     }
-    async getHtml(url: string) {
-        // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    private async createPage() {
         const page = await this.browser.newPage();
         page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36");
-        await page.goto(url, {
-            //wait for content to load 
-            waitUntil: 'networkidle0',
-        });
+        return page;
+    }
+    async getHtml(url: string) {
+        // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+        const page = await this.createPage();
+        await page.goto(url);
         const html = await page.content();
-        page.close()
+        await page.close()
         return html
+    }
+    async screenshot(url: string) {
+        const page = await this.createPage();
+        await page.goto(url, {
+            waitUntil: 'networkidle2',
+        });
+        await page.screenshot({ path: 'example.png' });
+        await page.close()
     }
 }
