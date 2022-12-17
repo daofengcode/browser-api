@@ -1,6 +1,8 @@
 import { HttpException, HttpStatus, Injectable, OnApplicationShutdown } from "@nestjs/common";
 import { OnApplicationBootstrap } from "@nestjs/common/interfaces";
 import puppeteer, { Browser } from 'puppeteer';
+import { join } from 'path';
+import { uuid } from "src/utils/string.helper";
 
 @Injectable()
 export class BrowserService implements OnApplicationShutdown, OnApplicationBootstrap {
@@ -35,7 +37,8 @@ export class BrowserService implements OnApplicationShutdown, OnApplicationBoots
         await page.goto(url, {
             waitUntil: 'networkidle2',
         });
-        await page.screenshot({ path: 'example.png' });
+        var fileName = uuid() + ".png";
+        await page.screenshot({ path: `./public/${fileName}` });
         await page.close()
     }
 }

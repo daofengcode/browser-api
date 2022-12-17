@@ -1,4 +1,4 @@
-import { default as uuidRandom } from 'uuid-random';
+import { v4 as uuidv4 } from 'uuid';
 
 /** 判断一个字符串是否为空或全空白 */
 export const isNullOrWhitespace = (input: string | null | undefined) => {
@@ -17,5 +17,5 @@ export const isUrl = (text: string) => {
 
 /** 生成一个uuid字符串 */
 export const uuid = () => {
-  return uuidRandom();
+  return uuidv4();
 };
