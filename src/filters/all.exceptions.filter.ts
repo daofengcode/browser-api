@@ -39,10 +39,12 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
           }
         }
       }
+    } else if (exception instanceof Error) {
+      message = exception.message;
     } else {
       console.error(err);
       // 可写入日志
-      message = '服务器内部错误';
+      message = 'Internal server error';
     }
     const obj: IJsonResult<any> = {
       result: null,
