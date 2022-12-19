@@ -5,4 +5,6 @@ export class ScreenshotRequest {
     url: string
     width?: number
     height?: number
+    /** 模拟设备 */
+    device?:string
 }
