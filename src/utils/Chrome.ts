@@ -1,4 +1,5 @@
 import puppeteer, { Browser, KnownDevices, Page } from 'puppeteer';
+import config from 'src/config';
 import IRequest from 'src/interfaces/IRequest';
 import { isNumeric } from './number.helper';
 import { isNullOrWhitespace, uuid } from './string.helper';
@@ -15,14 +16,15 @@ export class Chrome {
         this.proxyUsername = proxyUsername
         this.proxyPassword = proxyPassword
     }
-    public static async create(proxyServer?: string, proxyUsername?: string, proxyPassword?: string) {
-        if (isNullOrWhitespace(proxyServer)) {
-            return new Chrome(await puppeteer.launch(), proxyServer, proxyUsername, proxyPassword);
+    public static async create() {
+        let option = config()
+        if (isNullOrWhitespace(option.PROXY_SERVER)) {
+            return new Chrome(await puppeteer.launch());
         } else {
             var browser = await puppeteer.launch({
-                args: [`--proxy-server=${proxyServer.trim()}`]
+                args: [`--proxy-server=${option.PROXY_SERVER.trim()}`]
             });
-            return new Chrome(browser, proxyServer, proxyUsername, proxyPassword)
+            return new Chrome(browser, option.PROXY_SERVER, option.PROXY_USERNAME, option.PROXY_PASSWORD)
         }
     }
     async close() {
@@ -58,6 +60,9 @@ export class Chrome {
                 password: this.proxyPassword.trim()
             });
         }
+        // page.on('request', event => {
+        //     console.log(event.resourceType())
+        // })
         return page;
     }
     async getHtml(request: IRequest) {

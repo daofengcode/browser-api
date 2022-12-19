@@ -3,6 +3,7 @@ import { isNumeric } from "src/utils/number.helper";
 import { ScreenshotRequest } from "./dto/screenshot.request";
 import { HtmlRequest } from "./dto/html.request";
 import { Chrome } from "src/utils/Chrome";
+import config from "src/config";
 
 @Injectable()
 export class BrowserService {
@@ -16,7 +17,7 @@ export class BrowserService {
             throw error
         } finally {
             if (chrome) {
-                await chrome.close();
+                chrome.close();
             }
         }
     }
@@ -30,7 +31,7 @@ export class BrowserService {
             throw error
         } finally {
             if (chrome) {
-                await chrome.close();
+                chrome.close();
             }
         }
     }
